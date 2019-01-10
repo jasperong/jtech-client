@@ -3,3 +3,15 @@
     padding: 2em;
   }
 }
+
+.button {
+  cursor: pointer;
+  &--hidden {
+    border: none;
+    background: none;
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+}

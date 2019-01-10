@@ -1,26 +1,55 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React, { Fragment } from 'react';
+import { Table, Pagination } from 'semantic-ui-react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
-const Employees = () => {
-  return (
-    <Table celled selectable>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Phone No.</Table.HeaderCell>
-          <Table.HeaderCell>Email</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
+import EmployeeRow from './EmployeeRow';
+import TableHead from './TableHead';
 
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>Jasper</Table.Cell>
-          <Table.Cell>123123123</Table.Cell>
-          <Table.Cell>qoweni@oinc.com</Table.Cell>
-        </Table.Row>
-      </Table.Body>
-    </Table>
-  );
-};
+const Employees = () => (
+  <Query query={getEmployees} variables={{ page: 0 }}>
+    {({ loading, error, data, refetch }) => {
+      if (loading) return <p>loading</p>;
+      if (error) return <p>error</p>;
+      const totalPages = Math.ceil(
+        data.allEmployees.totalCount / data.allEmployees.perPage
+      );
+      return (
+        <Fragment>
+          <Table celled selectable>
+            <TableHead />
+            <Table.Body>
+              {data.allEmployees.employees.map(employee => (
+                <EmployeeRow key={employee.email} employee={employee} />
+              ))}
+            </Table.Body>
+          </Table>
+          {totalPages > 1 && (
+            <Pagination
+              defaultActivePage={data.allEmployees.currentPage + 1}
+              totalPages={totalPages}
+              onPageChange={(e, data) => refetch({ page: data.activePage - 1 })}
+            />
+          )}
+        </Fragment>
+      );
+    }}
+  </Query>
+);
 
 export default Employees;
+
+const getEmployees = gql`
+  query allEmployees($page: Int!) {
+    allEmployees(page: $page) {
+      employees {
+        fullName
+        mobile
+        email
+      }
+      totalCount
+      currentPage
+      perPage
+    }
+  }
+`;

@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
-import { Sidebar as SemSidebar, Container } from 'semantic-ui-react';
 
 import Sidebar from '../Sidebar';
+
 const Layout = ({ children }) => (
   <Fragment>
-    <Sidebar />
-    <SemSidebar.Pusher>
+    <Sidebar>
       <div className="layout__container">{children}</div>
-    </SemSidebar.Pusher>
+    </Sidebar>
   </Fragment>
 );
 export default Layout;
