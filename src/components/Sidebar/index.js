@@ -40,6 +40,7 @@ class Sidebar extends Component {
           <Menu vertical>
             <Profile />
             <MenuItem icon="user" label="EMPLOYEES" />
+            <MenuItem icon="user" label="SERVICE" />
             <MenuItem icon="dollar sign" label="MONEY" />
           </Menu>
         }
