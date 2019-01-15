@@ -6,8 +6,6 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
-import 'semantic-ui-css/semantic.min.css';
-
 import './styles/index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

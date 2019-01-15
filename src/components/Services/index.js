@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Table, Pagination } from 'semantic-ui-react';
+import { Header, Table, Pagination } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -20,6 +20,9 @@ const Services = () => (
       );
       return (
         <Fragment>
+          <Header as="h2">
+            {m(data.allServices.services[0].date).format('LL')}
+          </Header>
           <Table celled selectable>
             <TableHead />
             <Table.Body>

@@ -48,7 +48,10 @@ class Sidebar extends Component {
         docked={sidebarDocked}
         onSetOpen={this.onSetSidebarOpen}
       >
-        <button className="button--hidden" onClick={this.onSetSidebarOpen}>
+        <button
+          className="button--hidden"
+          onClick={() => this.onSetSidebarOpen(true)}
+        >
           {!mql.matches && <Icon name="angle right" />}
         </button>
         {this.props.children}
