@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const MenuItem = ({ icon, label, path = '/' }) => (
   <Link to={path}>
-    <Menu.Item as="a">
+    <Menu.Item>
       <Icon name={icon} />
       {label}
     </Menu.Item>

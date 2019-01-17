@@ -43,6 +43,7 @@ const getEmployees = gql`
   query allEmployees($page: Int!) {
     allEmployees(page: $page) {
       employees {
+        id
         fullName
         mobile
         email

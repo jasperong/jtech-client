@@ -31,11 +31,13 @@ const Services = () => (
               ))}
             </Table.Body>
           </Table>
-          <Pagination
-            defaultActivePage={data.allServices.currentPage + 1}
-            totalPages={totalPages}
-            onPageChange={(e, data) => refetch({ page: data.activePage - 1 })}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              defaultActivePage={data.allServices.currentPage + 1}
+              totalPages={totalPages}
+              onPageChange={(e, data) => refetch({ page: data.activePage - 1 })}
+            />
+          )}
         </Fragment>
       );
     }}

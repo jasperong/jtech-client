@@ -3,13 +3,14 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Redirect, Route } from 'react-router-dom';
 
+import Loading from '../Layout/Loading';
 import { loadState } from '../../utils/localStorage';
 
 const AuthRoute = props => (
   <Query query={CHECK_AUTH}>
     {({ loading, error, data }) => {
       if (error) console.log(error);
-      if (loading) return <p>loading</p>;
+      if (loading) return <Loading />;
       return (data.currentUser && data.currentUser.authenticationToken) ===
         (loadState() && loadState().token) ? (
         <Route {...props} />

@@ -39,9 +39,9 @@ class Sidebar extends Component {
         sidebar={
           <Menu vertical>
             <Profile />
-            <MenuItem icon="user" label="EMPLOYEES" path="employees" />
+            <MenuItem icon="user" label="TECHNICIANS" path="/technicians" />
             <MenuItem icon="user" label="SERVICE" path="/" />
-            <MenuItem icon="sign-out" label="LOG OUT" path="logout" />
+            <MenuItem icon="sign-out" label="LOG OUT" path="/logout" />
           </Menu>
         }
         open={sidebarOpen}
