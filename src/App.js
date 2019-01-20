@@ -8,6 +8,7 @@ import EmployeeSingle from './components/EmployeeSingle';
 import Layout from './components/Layout';
 import LogOut from './components/User/LogOut';
 import Services from './components/Services';
+import ServiceSingle from './components/ServiceSingle';
 import SignIn from './components/User/SignIn';
 
 const App = () => (
@@ -25,6 +26,7 @@ const App = () => (
           <AuthRoute path="/" exact component={Services} />
           <AuthRoute path="/technicians" exact component={Employees} />
           <AuthRoute path="/technicians/:id" exact component={EmployeeSingle} />
+          <AuthRoute path="/services/:id" exact component={ServiceSingle} />
         </AnimatedSwitch>
       </Layout>
     </Switch>

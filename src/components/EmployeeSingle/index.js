@@ -82,7 +82,9 @@ const GET_USER = gql`
     }
     allServices(params: $params, page: $page) {
       services {
+        id
         date
+        ticketNo
         office {
           alias
         }

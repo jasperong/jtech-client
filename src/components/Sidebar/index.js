@@ -37,14 +37,15 @@ class Sidebar extends Component {
     return (
       <RSideBar
         sidebar={
-          <Menu vertical>
+          <Menu vertical inverted icon="labeled">
             <Profile />
             <MenuItem icon="user" label="TECHNICIANS" path="/technicians" />
-            <MenuItem icon="user" label="SERVICE" path="/" />
+            <MenuItem icon="wrench" label="SERVICE" path="/" />
             <MenuItem icon="sign-out" label="LOG OUT" path="/logout" />
           </Menu>
         }
         open={sidebarOpen}
+        sidebarClassName="sidebar__container"
         docked={sidebarDocked}
         onSetOpen={this.onSetSidebarOpen}
       >

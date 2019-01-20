@@ -47,6 +47,11 @@ const getEmployees = gql`
         fullName
         mobile
         email
+        currentService {
+          office {
+            alias
+          }
+        }
       }
       totalCount
       currentPage

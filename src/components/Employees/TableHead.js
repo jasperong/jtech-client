@@ -6,7 +6,7 @@ const TableHead = () => (
     <Table.Row>
       <Table.HeaderCell>Name</Table.HeaderCell>
       <Table.HeaderCell>Phone No.</Table.HeaderCell>
-      <Table.HeaderCell>Email</Table.HeaderCell>
+      <Table.HeaderCell>Current Service</Table.HeaderCell>
     </Table.Row>
   </Table.Header>
 );

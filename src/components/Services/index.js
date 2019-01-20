@@ -21,7 +21,7 @@ const Services = () => (
       return (
         <Fragment>
           <Header as="h2">
-            {m(data.allServices.services[0].date).format('LL')}
+            {/* {m(data.allServices.services[0].date).format('LL')} */}
           </Header>
           <Table celled selectable>
             <TableHead />
@@ -50,8 +50,10 @@ const getServices = gql`
   query getServices($params: ServiceInput, $page: Int!) {
     allServices(params: $params, page: $page) {
       services {
+        id
         status
         date
+        ticketNo
         employee {
           fullName
           mobile

@@ -5,6 +5,7 @@ const TableHead = () => (
   <Table.Header>
     <Table.Row>
       <Table.HeaderCell />
+      <Table.HeaderCell>Ticket #</Table.HeaderCell>
       <Table.HeaderCell>Location</Table.HeaderCell>
       <Table.HeaderCell>Technician</Table.HeaderCell>
       <Table.HeaderCell>Phone No.</Table.HeaderCell>
