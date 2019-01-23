@@ -5,6 +5,7 @@ import { AnimatedSwitch } from 'react-router-transition';
 import AuthRoute from './components/AuthRoute';
 import Employees from './components/Employees';
 import EmployeeSingle from './components/EmployeeSingle';
+import EmployeeForm from './components/EmployeeForm';
 import Layout from './components/Layout';
 import LogOut from './components/User/LogOut';
 import Route from './components/ScrollToTopRoute';
@@ -25,8 +26,9 @@ const App = () => (
           className="switch-wrapper"
         >
           <AuthRoute path="/" exact component={Services} />
-          <AuthRoute path="/technicians" exact component={Employees} />
+          <AuthRoute path="/technicians/new" exact component={EmployeeForm} />
           <AuthRoute path="/technicians/:id" exact component={EmployeeSingle} />
+          <AuthRoute path="/technicians" exact component={Employees} />
           <AuthRoute path="/services/:id" exact component={ServiceSingle} />
         </AnimatedSwitch>
       </Layout>
