@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
-import { Header, Table, Pagination } from 'semantic-ui-react';
+import { Button, Header, Table, Pagination } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 
 import TableHead from './TableHead';
 import ServiceRow from './ServiceRow';
@@ -23,6 +24,11 @@ const Services = () => (
           <Header as="h2">
             {/* {m(data.allServices.services[0].date).format('LL')} */}
           </Header>
+
+          <Link to="/technicians">
+            <Button className="add__button" basic floated="right" icon="plus" />
+          </Link>
+
           <Table celled selectable>
             <TableHead />
             <Table.Body>

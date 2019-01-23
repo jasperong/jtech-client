@@ -1,7 +1,8 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import Route from '../ScrollToTopRoute';
 
 import Loading from '../Layout/Loading';
 import { loadState } from '../../utils/localStorage';

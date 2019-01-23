@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 
 import AuthRoute from './components/AuthRoute';
@@ -7,6 +7,7 @@ import Employees from './components/Employees';
 import EmployeeSingle from './components/EmployeeSingle';
 import Layout from './components/Layout';
 import LogOut from './components/User/LogOut';
+import Route from './components/ScrollToTopRoute';
 import Services from './components/Services';
 import ServiceSingle from './components/ServiceSingle';
 import SignIn from './components/User/SignIn';

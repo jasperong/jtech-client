@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
-import { Table, Pagination } from 'semantic-ui-react';
+import { Button, Table, Pagination } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 
 import EmployeeRow from './EmployeeRow';
 import TableHead from './TableHead';
@@ -16,6 +17,10 @@ const Employees = () => (
       );
       return (
         <Fragment>
+          <Link to="/">
+            <Button className="add__button" basic floated="right" icon="plus" />
+          </Link>
+
           <Table celled selectable>
             <TableHead />
             <Table.Body>
@@ -24,6 +29,7 @@ const Employees = () => (
               ))}
             </Table.Body>
           </Table>
+
           {totalPages > 1 && (
             <Pagination
               defaultActivePage={data.allEmployees.currentPage + 1}
