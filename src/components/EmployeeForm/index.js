@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Form, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Segment } from 'semantic-ui-react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+
+import ErrorMessage from '../ErrorMessage';
+import SuccessMessage from '../SuccessMessage';
 
 class EmployeeForm extends Component {
   constructor(props) {
@@ -33,7 +36,7 @@ class EmployeeForm extends Component {
     });
 
   render() {
-    const { firstName, lastName, email, mobile, role } = this.state;
+    const { firstName, lastName, email, mobile } = this.state;
     return (
       <Mutation
         mutation={CREATE_USER}
@@ -43,22 +46,21 @@ class EmployeeForm extends Component {
         {(createUser, { loading, data }) => (
           <Segment>
             <Form
-              error={data && data.createUser.error.length > 0}
+              error={data && Boolean(data.createUser.error)} // error and success want boolean as prop
+              success={data && Boolean(!data.createUser.error)}
               onSubmit={e => {
                 e.preventDefault();
                 createUser();
               }}
             >
-              {console.log(data)}
-              {data && data.createUser.error.length && (
-                <Message error>
-                  <Message.List>
-                    {data.createUser.error.map(err => (
-                      <Message.Item key={err}>{err}</Message.Item>
-                    ))}
-                  </Message.List>
-                </Message>
+              {data && data.createUser.error ? (
+                data.createUser.error.map(err => (
+                  <ErrorMessage key={err} error={err} />
+                ))
+              ) : (
+                <SuccessMessage message="Sucessfully created user!" />
               )}
+
               <Form.Field>
                 <label>First Name</label>
                 <Form.Input
@@ -67,6 +69,7 @@ class EmployeeForm extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Field>
+
               <Form.Field>
                 <label>Last Name</label>
                 <Form.Input
@@ -75,6 +78,7 @@ class EmployeeForm extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Field>
+
               <Form.Field>
                 <label>Email</label>
                 <Form.Input
@@ -84,6 +88,7 @@ class EmployeeForm extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Field>
+
               <Form.Field>
                 <label>Mobile No.</label>
                 <Form.Input
@@ -93,6 +98,7 @@ class EmployeeForm extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Field>
+
               <Form.Field>
                 <label>User Role</label>
                 <Form.Select
@@ -103,6 +109,7 @@ class EmployeeForm extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Field>
+
               <Button loading={loading} color="black">
                 Submit
               </Button>

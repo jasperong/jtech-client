@@ -1,0 +1,61 @@
+.DayPickerNavigation_button {
+  border: none;
+}
+
+.CalendarDay {
+  &__default {
+    border: none !important;
+  }
+
+  &__outside {
+    color: #757575 !important;
+  }
+
+  &__selected {
+    background: #33691e !important;
+
+    &:hover {
+      background: #33691e !important;
+      opacity: 0.7;
+    }
+
+    &_span {
+      background: #33691e !important;
+
+      &:hover {
+        background: #33691e !important;
+        opacity: 0.7 !important;
+      }
+    }
+  }
+
+  &__today {
+    color: #424242 !important;
+    background-color: #f2f2ff !important;
+
+    &:hover {
+      background: #f2f2ff !important;
+      opacity: 0.7 !important;
+    }
+  }
+
+  &:hover {
+    border: none;
+  }
+
+  transition: 0.25s;
+}
+
+.DayPickerNavigation_button {
+  background: transparent;
+}
+
+.CalendarMonth_caption {
+  > strong {
+    font-size: 0.8em;
+    font-weight: 200;
+    .drawer & {
+      color: #fafafa;
+    }
+  }
+}

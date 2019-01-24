@@ -5,19 +5,23 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 
 import EmployeeRow from './EmployeeRow';
+import ErrorMessage from '../ErrorMessage';
+import Loading from '../Layout/Loading';
 import TableHead from './TableHead';
 
 const Employees = () => (
   <Query query={getEmployees} variables={{ page: 0 }}>
     {({ loading, error, data, refetch }) => {
-      if (loading) return <p>loading</p>;
-      if (error) return <p>error</p>;
+      if (loading) return <Loading />;
+      if (error) return <ErrorMessage error={error} />;
+
       const totalPages = Math.ceil(
         data.allEmployees.totalCount / data.allEmployees.perPage
       );
+
       return (
         <Fragment>
-          <Link to="/">
+          <Link to="/technicians/new">
             <Button className="add__button" basic floated="right" icon="plus" />
           </Link>
 
