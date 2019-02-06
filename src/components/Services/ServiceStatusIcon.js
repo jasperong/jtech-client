@@ -15,6 +15,6 @@ const iconColor = status => {
     case 'offline':
       return 'grey';
     default:
-      return 'grey';
+      return 'blue';
   }
 };

@@ -10,6 +10,7 @@ const DatePicker = props => (
     inputIconPosition="after"
     isOutsideRange={() => false}
     numberOfMonths={1}
+    hideKeyboardShortcutsPanel
     showClearDate
     showDefaultInputIcon
     small

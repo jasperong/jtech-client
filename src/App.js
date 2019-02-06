@@ -10,6 +10,7 @@ import Layout from './components/Layout';
 import LogOut from './components/User/LogOut';
 import Route from './components/ScrollToTopRoute';
 import Services from './components/Services';
+import ServiceForm from './components/ServiceForm';
 import ServiceSingle from './components/ServiceSingle';
 import SignIn from './components/User/SignIn';
 
@@ -29,6 +30,7 @@ const App = () => (
           <AuthRoute path="/technicians/new" exact component={EmployeeForm} />
           <AuthRoute path="/technicians/:id" exact component={EmployeeSingle} />
           <AuthRoute path="/technicians" exact component={Employees} />
+          <AuthRoute path="/services/new" exact component={ServiceForm} />
           <AuthRoute path="/services/:id" exact component={ServiceSingle} />
         </AnimatedSwitch>
       </Layout>

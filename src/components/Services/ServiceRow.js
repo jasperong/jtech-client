@@ -7,7 +7,7 @@ const EmployeeRow = ({
     id,
     status,
     ticketNo,
-    employee: { fullName, mobile },
+    employee: { fullName, mobile, id: employeeId },
     office: { alias }
   }
 }) => (
@@ -19,7 +19,9 @@ const EmployeeRow = ({
       <Link to={`/services/${id}`}>{ticketNo}</Link>
     </Table.Cell>
     <Table.Cell>{alias}</Table.Cell>
-    <Table.Cell>{fullName}</Table.Cell>
+    <Table.Cell>
+      <Link to={`/technicians/${employeeId}`}>{fullName}</Link>
+    </Table.Cell>
     <Table.Cell>{mobile}</Table.Cell>
   </Table.Row>
 );

@@ -49,7 +49,7 @@ class Services extends Component {
                 onFocusChange={this.handleFocusChange}
               />
 
-              <Link to="/technicians">
+              <Link to="/services/new">
                 <Button
                   className="add__button"
                   basic
@@ -98,6 +98,7 @@ const getServices = gql`
         date
         ticketNo
         employee {
+          id
           fullName
           mobile
           email
