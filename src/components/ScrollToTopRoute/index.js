@@ -7,7 +7,8 @@ class ScrollToTopRoute extends Component {
     //   this.props.path === this.props.location.pathname &&
     //   this.props.location.pathname !== prevProps.location.pathname
     // ) {
-    document.getElementById('app-body').parentNode.scrollTop = 0;
+    const body = document.getElementById('app-body');
+    if (body) body.parentNode.scrollTop = 0;
     // }
   }
 

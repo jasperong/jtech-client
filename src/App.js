@@ -6,8 +6,10 @@ import AuthRoute from './components/AuthRoute';
 import Employees from './components/Employees';
 import EmployeeSingle from './components/EmployeeSingle';
 import EmployeeForm from './components/EmployeeForm';
+import ForgotPassowrd from './components/User/ForgotPassword';
 import Layout from './components/Layout';
 import LogOut from './components/User/LogOut';
+import ResetPassword from './components/User/ResetPassword';
 import Route from './components/ScrollToTopRoute';
 import Services from './components/Services';
 import ServiceForm from './components/ServiceForm';
@@ -17,6 +19,8 @@ import SignIn from './components/User/SignIn';
 const App = () => (
   <BrowserRouter>
     <Switch>
+      <Route path="/forgot" exact component={ForgotPassowrd} />
+      <Route path="/reset" exact component={ResetPassword} />
       <Route path="/signin" exact component={SignIn} />
       <Route path="/logout" exact component={LogOut} />
       <Layout>

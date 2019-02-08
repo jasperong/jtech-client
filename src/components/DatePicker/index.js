@@ -1,6 +1,5 @@
 import React from 'react';
 import { SingleDatePicker } from 'react-dates';
-import { Icon } from 'semantic-ui-react';
 
 import 'react-dates/lib/css/_datepicker.css';
 

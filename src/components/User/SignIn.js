@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button, Card, Container, Form, Message } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Header,
+  Message
+} from 'semantic-ui-react';
 
 import { saveState } from '../../utils/localStorage';
 
@@ -63,8 +71,11 @@ class SignIn extends Component {
                     value={password}
                   />
                 </Form.Field>
+                <Link to="/forgot">
+                  <Header as="h5">Forgot password?</Header>
+                </Link>
                 {hasError && <Message error content={error} />}
-                <Button>Sign In</Button>
+                <Button style={{ marginTop: '1em' }}>Sign In</Button>
               </Form>
             </Card>
           </Container>
