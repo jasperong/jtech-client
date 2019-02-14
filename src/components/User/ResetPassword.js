@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Card, Container, Form, Message } from 'semantic-ui-react';
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Header,
+  Message
+} from 'semantic-ui-react';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import qs from 'qs';
@@ -52,6 +59,7 @@ class ResetPassword extends Component {
     return (
       <Container className="signin__container">
         <Card className="signin__card" raised>
+          <Header as="h2">Reset Password</Header>
           <Form onSubmit={this.requestReset} error={hasError}>
             <Form.Field>
               <label htmlFor="password">Password</label>
