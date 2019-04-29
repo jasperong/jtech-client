@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 import RSideBar from 'react-sidebar';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
 import MenuItem from './MenuItem';
 import Profile from './Profile';
+import withCurrentUser from '../../HOC/withCurrentUser';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -48,17 +50,60 @@ class Sidebar extends Component {
 
   changeActiveIndex = idx => this.setState({ activeIndex: idx });
 
+  menuItems = [
+    {
+      icon: 'wrench',
+      label: 'Service',
+      path: '/'
+    },
+    {
+      icon: 'user',
+      label: 'Technicians',
+      path: '/technicians'
+    },
+    {
+      icon: 'sign-out',
+      label: 'Log out',
+      path: '/logout',
+      className: 'menu-item__bottom'
+    }
+  ];
+
+  techMenuItems = [
+    {
+      icon: 'wrench',
+      label: 'Service',
+      path: '/services/new'
+    },
+    {
+      icon: 'user',
+      label: 'Profile',
+      path: `/technicians/${this.props.currentUser.id}`
+    },
+    {
+      icon: 'sign-out',
+      label: 'Log out',
+      path: '/logout',
+      className: 'menu-item__bottom'
+    }
+  ];
+
   render() {
     const { sidebarOpen, sidebarDocked, activeIndex } = this.state;
+    const menuItems =
+      this.props.currentUser.role === 'employee'
+        ? this.techMenuItems
+        : this.menuItems;
     return (
       <RSideBar
         sidebar={
-          <Menu vertical inverted icon="labeled">
+          <Menu vertical inverted className="sidebar-menu" icon="labeled">
             <Profile />
-            {menuItems.map(({ icon, label, path }, i) => (
+            {menuItems.map(({ icon, label, path, className }, i) => (
               <MenuItem
                 icon={icon}
                 key={i}
+                className={className}
                 label={label}
                 path={path}
                 active={activeIndex === i}
@@ -84,22 +129,7 @@ class Sidebar extends Component {
   }
 }
 
-export default withRouter(Sidebar);
-
-const menuItems = [
-  {
-    icon: 'wrench',
-    label: 'Service',
-    path: '/'
-  },
-  {
-    icon: 'user',
-    label: 'Technicians',
-    path: '/technicians'
-  },
-  {
-    icon: 'sign-out',
-    label: 'Log out',
-    path: '/logout'
-  }
-];
+export default compose(
+  withRouter,
+  withCurrentUser
+)(Sidebar);

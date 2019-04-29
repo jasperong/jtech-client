@@ -3,19 +3,27 @@ import { Grid, Segment, Header } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
+import { Redirect } from 'react-router-dom';
 
 import Loading from '../Layout/Loading';
 import { m } from '../../utils';
+import withCurrentUser from '../../HOC/withCurrentUser';
 
 const ServiceSingle = ({
   match: {
     params: { id }
-  }
+  },
+  currentUser
 }) => (
-  <Query query={GET_SERVICE} variables={{ id }}>
+  <Query query={GET_SERVICE} variables={{ fields: { id } }}>
     {({ loading, data, refetch }) => {
       if (loading) return <Loading />;
-      console.log(data);
+      if (
+        currentUser.role === 'employee' &&
+        data.service.userId !== currentUser.id
+      )
+        return <Redirect to={`/technicians/${currentUser.id}`} />;
+      console.log(id);
       return (
         <div className="employee-single__container">
           <Header as="h2">Ticket # {data.service.ticketNo}</Header>
@@ -67,11 +75,11 @@ const ServiceSingle = ({
   </Query>
 );
 
-export default ServiceSingle;
+export default withCurrentUser(ServiceSingle);
 
 const GET_SERVICE = gql`
-  query service($id: ID!) {
-    service(id: $id) {
+  query service($fields: ServiceInput!) {
+    service(fields: $fields) {
       ticketNo
       status
       contactName
@@ -81,6 +89,7 @@ const GET_SERVICE = gql`
       startTime
       endTime
       date
+      userId
       employee {
         id
         fullName

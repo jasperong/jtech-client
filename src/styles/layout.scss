@@ -44,3 +44,17 @@
 .add__button {
   margin-bottom: 1em !important;
 }
+
+.sidebar-menu {
+  height: 100%;
+}
+
+.menu-item {
+  &__bottom {
+    color: red;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 1em;
+    position: absolute !important;
+  }
+}

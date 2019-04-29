@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { Segment, Header } from 'semantic-ui-react';
 
+import { m } from '../../utils';
+
 const CurrentService = ({ currentService }) => {
   console.log(currentService);
   return (
@@ -9,12 +11,20 @@ const CurrentService = ({ currentService }) => {
       {currentService ? (
         <Segment>
           <Header as="h4">
-            {currentService && currentService.office.alias}
+            {currentService.office.alias}
+            <Header.Subheader>
+              {m(currentService.startTime).format('h A')} -{' '}
+              {m(currentService.endTime).format('h A')}
+            </Header.Subheader>
           </Header>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
-          delectus? Est aliquid doloribus molestiae nemo, quibusdam ullam
-          explicabo quod itaque, saepe, ipsa quos? Aut nostrum quos nisi,
-          laboriosam hic sint?
+          <Header as="h5">
+            Work Requested
+            <Header.Subheader>{currentService.workRequested}</Header.Subheader>
+          </Header>
+          <Header as="h5">
+            Work Done
+            <Header.Subheader>{currentService.workDone}</Header.Subheader>
+          </Header>
         </Segment>
       ) : (
         <Segment>

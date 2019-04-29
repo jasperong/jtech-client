@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, Header, Table, Pagination } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import DatePicker from '../DatePicker';
 import ErrorMessage from '../ErrorMessage';
@@ -10,6 +10,8 @@ import Loading from '../Layout/Loading';
 import TableHead from './TableHead';
 import ServiceRow from './ServiceRow';
 import { m } from '../../utils';
+import withCurrentUser from '../../HOC/withCurrentUser';
+
 import 'react-dates/lib/css/_datepicker.css';
 
 class Services extends Component {
@@ -34,6 +36,8 @@ class Services extends Component {
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />;
           if (error) return <ErrorMessage error={error} />;
+          if (this.props.currentUser.role === 'employee')
+            return <Redirect to="/services/new" />;
 
           const totalPages = Math.ceil(
             data.allServices.totalCount / data.allServices.perPage
@@ -87,7 +91,7 @@ class Services extends Component {
   }
 }
 
-export default Services;
+export default withCurrentUser(Services);
 
 const getServices = gql`
   query getServices($params: ServiceInput, $page: Int!) {

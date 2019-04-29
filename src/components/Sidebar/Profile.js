@@ -1,19 +1,31 @@
 import React from 'react';
 import { Image, MenuItem } from 'semantic-ui-react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
-const Profile = () => {
-  return (
-    <MenuItem>
-      <Image
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-        size="tiny"
-        circular
-        centered
-        spaced
-      />
-      <h5>Jasper Ong</h5>
-    </MenuItem>
-  );
-};
+import Loading from '../Layout/Loading';
+import logo from '../../assets/logo.jpg';
+
+const Profile = () => (
+  <Query query={GET_USER}>
+    {({ loading, data }) => {
+      if (loading) return <Loading />;
+      return (
+        <MenuItem>
+          <Image src={logo} size="tiny" centered spaced />
+          <h5>{data.currentUser.fullName}</h5>
+        </MenuItem>
+      );
+    }}
+  </Query>
+);
 
 export default Profile;
+
+const GET_USER = gql`
+  {
+    currentUser {
+      fullName
+    }
+  }
+`;

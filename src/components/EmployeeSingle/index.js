@@ -1,21 +1,26 @@
 import React from 'react';
-import { Grid, Segment, Header, Table, Pagination } from 'semantic-ui-react';
+import { Segment, Header, Table, Pagination } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Redirect } from 'react-router-dom';
 
 import TableHead from './TableHead';
 import CurrentService from './CurrentService';
 import ServiceRow from './ServiceRow';
 import Loading from '../Layout/Loading';
+import withCurrentUser from '../../HOC/withCurrentUser';
 
 const EmployeeSingle = ({
   match: {
     params: { id }
-  }
+  },
+  currentUser
 }) => (
   <Query query={GET_USER} variables={{ id, params: { userId: id }, page: 0 }}>
     {({ loading, data, refetch }) => {
       if (loading) return <Loading />;
+      if (currentUser.role === 'employee' && id !== currentUser.id)
+        return <Redirect to={`/technicians/${currentUser.id}`} />;
 
       const totalPages = Math.ceil(
         data.allServices.totalCount / data.allServices.perPage
@@ -26,7 +31,7 @@ const EmployeeSingle = ({
             {data.user.fullName}
             <Header.Subheader>{data.user.mobile}</Header.Subheader>
           </Header>
-
+          {/*
           <Grid stackable columns="equal">
             <Grid.Column>
               <Segment>Some chart here</Segment>
@@ -37,7 +42,7 @@ const EmployeeSingle = ({
             <Grid.Column>
               <Segment>Some chart here</Segment>
             </Grid.Column>
-          </Grid>
+          </Grid> */}
 
           <CurrentService currentService={data.user.currentService} />
 
@@ -67,7 +72,7 @@ const EmployeeSingle = ({
   </Query>
 );
 
-export default EmployeeSingle;
+export default withCurrentUser(EmployeeSingle);
 
 const GET_USER = gql`
   query user($id: ID!, $params: ServiceInput, $page: Int!) {
@@ -78,6 +83,10 @@ const GET_USER = gql`
         office {
           alias
         }
+        startTime
+        endTime
+        workRequested
+        workDone
       }
     }
     allServices(params: $params, page: $page) {

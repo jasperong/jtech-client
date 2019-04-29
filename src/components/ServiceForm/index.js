@@ -3,6 +3,7 @@ import { Button, Form, Segment } from 'semantic-ui-react';
 import { Mutation, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import DatePicker from '../DatePicker';
 import ErrorMessage from '../ErrorMessage';
 import SuccessMessage from '../SuccessMessage';
 import { m } from '../../utils';
@@ -11,6 +12,10 @@ class ServiceForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      focused: false,
+      date: m(),
+      startTime: null,
+      endTime: null,
       ticketNo: '',
       status: 'offline',
       officeId: '',
@@ -26,13 +31,40 @@ class ServiceForm extends Component {
     this.prepopulateService();
   }
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value }, () => {
+      console.log(
+        this.state.date
+          .clone()
+          .startOf('day')
+          .add(this.state.startTime, 'hours')
+          .format()
+      );
+    });
+  };
 
   statusOptions = [
     { text: 'Offline', value: 'offline' },
     { text: 'In Transit', value: 'in_transit' },
     { text: 'Online', value: 'online' },
     { text: 'Done', value: 'done' }
+  ];
+
+  timeOptions = [
+    { text: '', value: null },
+    { text: '8AM', value: 8 },
+    { text: '9AM', value: 9 },
+    { text: '10AM', value: 10 },
+    { text: '11AM', value: 11 },
+    { text: '12PM', value: 12 },
+    { text: '1PM', value: 13 },
+    { text: '2PM', value: 14 },
+    { text: '3PM', value: 15 },
+    { text: '4PM', value: 16 },
+    { text: '5PM', value: 17 },
+    { text: '6PM', value: 18 },
+    { text: '7PM', value: 19 },
+    { text: '8PM', value: 20 }
   ];
 
   getOffices = async () => {
@@ -48,14 +80,20 @@ class ServiceForm extends Component {
       variables: { fields: { date: m().format('LL') } }
     });
     console.log(data.service);
-    this.setState({
-      ticketNo: data.service.ticketNo || '',
-      status: data.service.status || 'offline',
-      officeId: data.service.officeId || '',
-      fare: data.service.fare || '',
-      workRequested: data.service.workRequested || '',
-      workDone: data.service.workDone || ''
-    });
+    console.log(m(data.service.startTime).hour());
+    if (data.service) {
+      this.setState({
+        date: data.service.date || m(),
+        startTime: m(data.service.startTime).hour() || null,
+        endTime: m(data.service.endTime).hour() || null,
+        ticketNo: data.service.ticketNo || '',
+        status: data.service.status || 'offline',
+        officeId: data.service.officeId || '',
+        fare: data.service.fare || '',
+        workRequested: data.service.workRequested || '',
+        workDone: data.service.workDone || ''
+      });
+    }
   };
 
   resetState = () =>
@@ -68,8 +106,11 @@ class ServiceForm extends Component {
     });
 
   render() {
-    console.log(m().format('LL Z'));
     const {
+      date,
+      focused,
+      startTime,
+      endTime,
       offices,
       ticketNo,
       fare,
@@ -88,11 +129,25 @@ class ServiceForm extends Component {
             workDone,
             workRequested,
             status,
-            date: m().format('LL'),
+            date,
+            startTime:
+              startTime &&
+              date
+                .clone()
+                .startOf('day')
+                .add(startTime, 'hours')
+                .format(),
+            endTime:
+              endTime &&
+              date
+                .clone()
+                .startOf('day')
+                .add(endTime, 'hours')
+                .format(),
             fare: parseFloat(fare)
           }
         }}
-        onCompleted={this.resetState}
+        // onCompleted={this.resetState}
       >
         {(createService, { loading, data }) => (
           <Segment>
@@ -113,6 +168,37 @@ class ServiceForm extends Component {
               )}
 
               <Form.Field>
+                <label>Date</label>
+                <DatePicker
+                  date={date}
+                  focused={focused}
+                  onDateChange={date =>
+                    this.handleChange(null, { name: 'date', value: date })
+                  }
+                  onFocusChange={({ focused }) => this.setState({ focused })}
+                />
+              </Form.Field>
+
+              <Form.Group widths="equal">
+                <Form.Select
+                  fluid
+                  options={this.timeOptions}
+                  name="startTime"
+                  value={startTime}
+                  label="Start Time"
+                  onChange={this.handleChange}
+                />
+                <Form.Select
+                  fluid
+                  options={this.timeOptions}
+                  name="endTime"
+                  value={endTime}
+                  label="End Time"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+
+              <Form.Field>
                 <label>Ticket No.</label>
                 <Form.Input
                   value={ticketNo}
@@ -126,7 +212,7 @@ class ServiceForm extends Component {
                 <Form.Select
                   name="status"
                   options={this.statusOptions}
-                  defaultValue={status}
+                  value={status}
                   onChange={this.handleChange}
                 />
               </Form.Field>
@@ -136,7 +222,7 @@ class ServiceForm extends Component {
                 <Form.Select
                   name="officeId"
                   options={offices}
-                  defaultValue={'1'}
+                  value={officeId}
                   onChange={this.handleChange}
                 />
               </Form.Field>
@@ -212,6 +298,8 @@ const GET_SERVICE = gql`
       fare
       workRequested
       workDone
+      startTime
+      endTime
     }
   }
 `;
